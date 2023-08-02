@@ -12,6 +12,7 @@ from decouple import config
 
 VIDEO_TITLE = 'Biometric Student Attendance'
 
+os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
 
 def load_photo_file_storage():
     from plugins.boto_plugins import read_from_s3, get_relative_path
