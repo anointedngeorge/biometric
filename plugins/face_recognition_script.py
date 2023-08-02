@@ -12,6 +12,7 @@ from decouple import config
 
 VIDEO_TITLE = 'Biometric Student Attendance'
 
+# for headless platform like heroku
 os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
 
 def load_photo_file_storage():
