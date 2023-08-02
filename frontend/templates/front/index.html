@@ -1,0 +1,83 @@
+{% extends 'front/base.html' %}
+{% load static %}
+{% static 'css' as css %}
+{% static 'img' as img %}
+{% static 'js' as js %}
+{% static 'lib' as lib %}
+{% static 'mail' as mail %}
+{% static 'scss' as scss %}
+
+
+
+
+{% block content %}
+
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 pb-5 mb-5">
+        <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#header-carousel" data-slide-to="1"></li>
+                <li data-target="#header-carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                {% for slider in sliders %}
+                  
+                
+                <div class="carousel-item  {% if slider.is_active  %}
+                active
+                {% endif %} " style="min-height: 300px;">
+                    <img class="position-relative w-100" src="{{slider.image.url}}" style="min-height: 300px; object-fit: cover;">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-md-3">{{slider.title}} </h5>
+                            <h1 class="display-3 text-white mb-md-4">
+                                {{ slider.content|slice:"0:23" }}
+                            </h1>
+                            <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+              
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <img class="img-fluid rounded mb-4 mb-lg-0" src="{{about.image.url}}" alt="">
+                </div>
+                <div class="col-lg-7">
+                    <div class="text-left mb-4">
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">
+                            {{about.subtitle}}
+                        </h5>
+                        <h1>
+                            {{about.title}}
+                        </h1>
+                    </div>
+                    <p>
+                        {{about.content}}
+                    </p>
+                    <!-- <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+
+
+
+
+
+    {% endblock content %}

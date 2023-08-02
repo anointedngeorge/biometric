@@ -1,0 +1,87 @@
+{% extends 'startadmin/base.html' %}
+
+
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+            <table class="border">
+                <tr>
+                    <td>
+                        <button
+                            data-url="{% url 'dashboard:subjects' %}"
+                            id="new_subject_btn"
+                            data-toggle="modal" data-target=".bd-example-modal-lg"
+                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm modal_button" >
+                                <i class="fas fa-download fa-sm text-white-50"></i> New Subject
+                        </button>
+                    </td>
+                    <td>
+                        <button
+                            data-url="{% url 'dashboard:department' %}"
+                            id="new_dept_btn"
+                            data-toggle="modal" data-target=".bd-example-modal-lg"
+                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm modal_button" >
+                                <i class="fas fa-download fa-sm text-white-50"></i> New Department
+                        </button>
+                    </td>
+
+                    <td>
+                        <button
+                            data-url="{% url 'dashboard:levels' %}"
+                            id="new_level_btn"
+                            data-toggle="modal" data-target=".bd-example-modal-lg"
+                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm modal_button" >
+                                <i class="fas fa-download fa-sm text-white-50"></i> New Level
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="col-sm-12 title">
+                    <h3>Create Course</h3>
+                </div>
+
+                
+                <div class="col-sm-12">
+                    <form action="{% url 'dashboard:courses' %}" method='POST'>
+                        {% csrf_token %}
+                        {{forms}}
+                        <div class="form-group mt-3">
+                            <button class="btn-sm btn btn-primary">Create Course</button>
+                        </div>
+                    </form>     
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3>List</h3>
+               
+                <div class="table-responsive">
+                    <table class="table table-sm bg-white">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Department</th>
+                                <th>Lecturer</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                                <tr>
+                                    <td>{{course.subject}}</td>
+                                    <td>{{course.department}}</td>
+                                    <td>{{course.lecturer}}</td>
+                                    <td>{{course.levels}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+     <!-- /.container-fluid -->
+
+{% endblock content %}

@@ -1,0 +1,79 @@
+
+
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-lg-2">
+            Course: <span class="text text-warning">English Language</span>
+        </div>
+        <div class="col-lg-2">
+            Lecturer:Anthoy Emeka
+        </div>
+        <div class="col-lg-2">
+            Total No: 190
+        </div>
+        <div class="col-lg-2">
+            Date: {{current_date}}
+        </div>
+
+        <div class="col-lg-4">
+            <form>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Start</label>
+                        <input type="time" name="start_time">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>End</label>
+                        <input type="time" name="end_time">
+                    </div>
+                    <div class="col-lg-12">
+                        <button class="btn btn-sm btn-info btn-block">Set</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 table-responsive">
+            <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <td></td>
+                        {% for i in range_number %}
+                        <td>
+                            <!-- current_month -->
+                            {% if i.day == current_day %}
+                            <input type="checkbox" checked>
+                            {% else %}
+                            <input type="checkbox" disabled>
+                            {% endif %}
+
+                            <i>{{i.day}}</i> <br>
+                            <span style="font-size:10px;">{{i.name}}</span> 
+                        
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range_number %}
+                        <tr>
+                            <td>Onovo Arinze</td>
+                            {% for e in range_number %}
+                            <td>
+                                <select name="" id="" style="padding:1px;">
+                                    <option>Present</option>
+                                    <option selected>Absent</option>
+                                </select>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

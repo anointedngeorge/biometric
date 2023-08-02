@@ -1,0 +1,63 @@
+
+{% extends 'startadmin/base.html' %}
+
+{% block content %}
+
+       <!-- Begin Page Content -->
+        <div class="container-fluid">
+           <div class="table-responsive">
+            <table>
+                <tr id="attendance_date"></tr>
+            </table>
+           </div>
+
+            <div id="container-content" class="mt-4">
+
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+<script>
+
+    (function(params) {
+        const month = ['January','Febuary','March','April','May','June','July','August','September',
+        'October','November','December']
+
+        const color = ['primary','warning','info','secondary','success','info','primary','warning','primary',
+        'info','success','secondary']
+        const el =  document.getElementById('attendance_date');
+        const dt = new Date();
+        console.log(dt.getDate());
+        month.map((data, i) => {
+            if (dt.getMonth() == i) {
+                el.innerHTML += `<td><a id='link_${i}' class='link month_links btn btn-sm btn-${color[i]}' href="{% url 'dashboard:page'  %}?folder=admin&pagename=create_attendance&month_int=${i}&month=${data.toLowerCase()}">${data}</a></td>`
+            }else {
+                el.innerHTML += `<td><a id='link_${i}' class='links month_links btn btn-sm btn-${color[i]}' href="{% url 'dashboard:page'  %}?folder=admin&pagename=create_attendance&month_int=${i}&month=${data.toLowerCase()}">${data}</a></td>`
+            }
+        })
+    })()
+
+
+
+async function loadpage(el) {
+        el.preventDefault();
+        const page_href = el.target.href;
+        const f = await fetch(page_href);
+        const p =  await f.text()
+        document.getElementById('container-content').innerHTML = p;
+}
+const links = document.querySelectorAll('.page-btn');
+links.forEach(element => {
+    document.getElementById(element.id).addEventListener('click', loadpage, false)
+});
+
+
+
+const links1 = document.querySelectorAll('.month_links');
+links1.forEach(element => {
+    document.getElementById(element.id).addEventListener('click', loadpage, false)
+});
+
+</script>
+{% endblock content %}
+

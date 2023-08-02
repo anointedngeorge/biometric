@@ -1,0 +1,144 @@
+{% load static %}
+{% static "assets/" as asset %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{asset}}/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="{{asset}}/img/favicon.png">
+  <title>{% block title %}{{title}}{% endblock %}</title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{{asset}}/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="{{asset}}/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{{asset}}/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{asset}}/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+          <div class="container-fluid">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/">
+                {{site_header}}
+            </a>
+            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon mt-2">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navigation">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link me-2" href="../pages/sign-up.html">
+                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                    Sign Up
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link me-2" href="../pages/sign-in.html">
+                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                    Sign In
+                  </a>
+                </li> -->
+              </ul>
+            
+            </div>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-start">
+                  <h4 class="font-weight-bolder">Sign In</h4>
+                  <p class="mb-0">{{site_title}}</p>
+                  {% for message in messages %}
+                        {{message}}
+                  {% endfor %}
+                </div>
+                <div class="card-body">
+                  <form role="form" 
+                        action="{% url 'admin:login' %}?next={{ request.GET.next }}"
+                        method="POST"
+                    >
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <!-- <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email"> -->
+                      {{form.username.label}}
+                      {{form.username}}
+                    </div>
+                    <div class="mb-3">
+                      {{form.password.label}}
+                      {{form.password}}
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="rememberMe">
+                      <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p class="mb-4 text-sm mx-auto">
+                    Don't have an account?
+                    <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" 
+              style="background-image: url(data:image/jpeg;base64,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);
+          background-size: cover;">
+                <span class="mask bg-gradient-primary opacity-6"></span>
+                <h4 class="mt-5 text-white font-weight-bolder position-relative">BIOMETRIC STUDENT APPLICATION</h4>
+                <p class="text-white position-relative">LECTURER DASBOARD</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!--   Core JS Files   -->
+  <script src="{{asset}}/js/core/popper.min.js"></script>
+  <script src="{{asset}}/js/core/bootstrap.min.js"></script>
+  <script src="{{asset}}/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="{{asset}}/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{{asset}}/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>

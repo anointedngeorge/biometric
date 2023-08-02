@@ -1,0 +1,41 @@
+
+
+{% if attendance_ajax %}
+  
+
+
+{% for x in attendance_ajax %}
+{% for e in x.subject.student_subjects.all %}
+<tr>
+<!-- <td>{{forloop.counter}}</td> -->
+<td>{{e.user}}</td>
+<td>
+  {{x.subject}}
+  {% for xx in e.user.get_student_courses %}
+      {% if xx.subject == x.subject %}
+
+        <b>Present: ({{xx.count}})</b>
+
+        {% if xx.count > 75 %}
+        <a class="btn btn-primary btn-sm" href="">
+          allow to take exam
+        </a>
+        {% else %}
+        ...
+        {% endif %}
+    
+      {% endif %}
+    {% endfor %}
+</td>                   
+</tr>
+{% endfor %}
+{% endfor %}
+
+
+{% else %}
+
+<tr>
+  <td>No record found for <b>{{subject.name}}.</b> </td>
+</tr>
+
+{% endif %}

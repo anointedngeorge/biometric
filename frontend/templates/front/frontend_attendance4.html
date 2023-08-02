@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Streaming with JavaScript</title>
+</head>
+<body>
+  <video id="videoElement" width="640" height="480" autoplay></video>
+
+  <script>
+    async function startVideoStream() {
+      try {
+        // Get user media (video) from the device
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+        // Get the video element from the DOM
+        const videoElement = document.getElementById("videoElement");
+
+        // Set the video stream as the source of the video element
+        videoElement.srcObject = stream;
+      } catch (error) {
+        console.error("Error accessing user media:", error);
+      }
+    }
+
+    // Call the function to start the video stream when the page loads
+    startVideoStream();
+  </script>
+</body>
+</html>

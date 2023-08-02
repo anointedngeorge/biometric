@@ -1,0 +1,13 @@
+<div class="container">
+    <p class="text text-primary text-gray-800">Register</p>
+    <form action="{% url 'dashboard:student' %}" method="post">
+        {% csrf_token %}
+        {{form.as_table}}
+        
+        {% if form %}
+          <div class="form-group mt-3">
+            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+          </div>
+        {% endif %}
+    </form>
+</div>

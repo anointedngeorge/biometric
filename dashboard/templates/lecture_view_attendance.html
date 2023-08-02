@@ -1,0 +1,94 @@
+{% extends "admin/base.html" %}
+{% block extrahead %}
+    <style>
+        /* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header styles */
+.table thead {
+  background-color: #f1f1f1;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Alternating row styles */
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect on rows */
+.table tbody tr:hover {
+  background-color: #eaeaea;
+}
+
+/* Example styling for specific columns */
+.table .highlight-column {
+  font-weight: bold;
+}
+
+.table .highlight-column:hover {
+  background-color: #f7f7f7;
+}
+
+    </style>
+{% endblock extrahead %}
+
+
+
+{% block content %}
+
+    <div>
+        <i>Lecturer's name</i>
+        <h1><b>{{fullname}}</b></h1>
+        <!-- <i>{{id}}</i> -->
+        <i>Attendance Report Sheet</i>
+    </div> <br>
+
+    <div class="col-lg-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Student(s)</td>
+                    <td>Subject</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for x in attendance %}
+                    {% for e in x.subject.student_subjects.all %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{e.user}}</td>
+                    <td>{{x.subject}}
+                      {% for xx in e.user.get_student_courses %}
+                          {% if xx.subject == x.subject %}
+                              <b>Present: ({{xx.count}})</b>
+                          
+                          {% endif %}
+                        {% endfor %}
+                    </td>                   
+                </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+  <div>
+    <button onclick="preview_and_print()">Printout</button>
+  </div>
+
+  <script>
+    function preview_and_print(params) {
+      window.print()
+    }
+  </script>
+{% endblock content %}  

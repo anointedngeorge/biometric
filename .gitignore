@@ -1,0 +1,22 @@
+./env_biometric
+/env_biometric
+
+__pycache__
+./__pycache__
+
+/dashboard/__pycache__
+/dashboard/frontend/__pycache__
+/dashboard/__pycache__
+.env
+
+/authuser/__pycache__
+
+db.sqlite3
+
+.git
+.gits
+.github
+.vscode
+.idea
+# https://git.heroku.com/biometric.git
+# https://github.com/anointedngeorge/biometric_school_project.git

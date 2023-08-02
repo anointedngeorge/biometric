@@ -1,0 +1,15 @@
+<div class="container">
+    
+    <form action="{% url 'dashboard:lecturer' %}" method="post">
+      
+        {% csrf_token %}
+        {{form.as_table}}
+
+        {% if form %}
+          <div class="form-group mt-3">
+            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+          </div>
+        {% endif %}
+    </form>
+
+</div>

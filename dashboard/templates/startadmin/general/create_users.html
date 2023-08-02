@@ -1,0 +1,51 @@
+
+{% extends 'startadmin/base.html' %}
+
+{% block content %}
+
+       <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <table>
+                <tr>
+                    <td>
+                        <a 
+                        class="btn btn-sm btn-primary page-btn"
+                        id="student"
+                        href="{% url 'dashboard:page' %}?folder=student&pagename=create"
+                        >
+                            Create Student
+                        </a>
+                    </td>
+                    <td>
+                        <a 
+                        class="btn btn-sm btn-warning page-btn"
+                        id="lecturer"
+                        href="{% url 'dashboard:page' %}?folder=lecturer&pagename=create"
+                        >
+                        Create Lecturer
+                    </a>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="container-content" class="mt-4">
+
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+<script>
+    const links = document.querySelectorAll('.page-btn');
+   async function loadpage(el) {
+            el.preventDefault();
+            const page_href = el.target.href;
+            const f = await fetch(page_href);
+            const p =  await f.text()
+            document.getElementById('container-content').innerHTML = p;
+        }
+    links.forEach(element => {
+        document.getElementById(element.id).addEventListener('click', loadpage, false)
+    });
+</script>
+{% endblock content %}
+

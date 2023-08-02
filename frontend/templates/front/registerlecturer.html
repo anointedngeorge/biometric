@@ -1,0 +1,57 @@
+{% extends 'front/base.html' %}
+{% load static %}
+{% static 'css' as css %}
+{% static 'img' as img %}
+{% static 'js' as js %}
+{% static 'lib' as lib %}
+{% static 'mail' as mail %}
+{% static 'scss' as scss %}
+{% load custom_crispy_forms %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'custom/form_style.css' %}">
+{% endblock extrahead %}
+
+
+{% block content %}
+
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Lecturer Register Page</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Page</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Contact</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <!-- <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Contact</h5> -->
+                <h1>Register Lecturer</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form method="POST" action="{% url 'frontend:lecturer_register' %}">
+                        {% csrf_token %}
+                        {{ lecturerform|render_form3 }}
+                        <br>
+                        <button class="btn btn-primary " type="submit">
+                            Enroll A lecturer
+                        </button>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+    {% endblock content %}

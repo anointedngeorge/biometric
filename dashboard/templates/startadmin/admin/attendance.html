@@ -1,0 +1,82 @@
+
+{% extends 'startadmin/base.html' %}
+
+{% block content %}
+        
+       <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <h4>Create Attendance</h4>
+            <div class="row">
+                <div class="col-lg-4">
+                   <form action="{% url 'dashboard:register_attendance' %}"  method="POST">
+                    {% csrf_token %}
+                    <label>
+                        Days
+                    </label>
+                   <select name="attributes" class="form-control">
+                    {% for i in range_number %}
+                        <option value="{'day':{{i.day}},'day_name':'{{i.name}}','month':{{current_month}} }">
+                            {{i.day}} {{i.name}}
+                        </option>
+                    {% endfor %}
+                   </select>
+
+                   {{form}}
+
+                   {% if form %}
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Create
+                            </button>
+                        </div>
+                   {% endif %}
+                   </form>
+                </div>
+
+
+                <div class="col-lg-8 table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>lecturer</th>
+                                <th>subject</th>
+                                <th>day</th>
+                                <th>dayname</th>
+                                <th>month</th>
+                                <th>Total</th>
+                                <th>Level</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for obj in objects %}
+                            <!-- <li>{{obj.get_attribute}}</li> -->
+                            <tr>
+                                <td>{{obj.code}}</td>
+                                <td>{{obj.lecturer}} </td>
+                                <td>{{obj.subject}}</td>
+                                <td>{{obj.get_attribute.day}}</td> 
+                                <td>{{obj.get_attribute.day_name}}</td>
+                                <td>{{obj.get_attribute.month}}</td>
+                                <td>56</td>
+                                <td>{{obj.levels}}</td>
+                                <td>{{obj.get_level}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Start</button>
+                                    <button class="btn btn-sm btn-info">Finish</button>
+                                    <button class="btn btn-sm btn-primary">Retake</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+
+{% endblock content %}
+
