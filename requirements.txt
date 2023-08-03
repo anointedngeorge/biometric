@@ -14,8 +14,8 @@ kiwisolver==1.4.4
 matplotlib==3.7.1
 numpy==1.24.3
 opencv-contrib-python-headless
-opencv-contrib-python
-opencv-python
+# opencv-contrib-python
+# opencv-python
 packaging==23.1
 Pillow
 pyfingerprint==1.5
