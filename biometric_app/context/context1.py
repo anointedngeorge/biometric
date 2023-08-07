@@ -9,4 +9,5 @@ def processor(request):
         'lecturerform':LecturerForm,
         'sliders':Slider.objects.all(),
         'about':About.objects.all().first(),
+        'logo':Logo.objects.all().first(),
     }

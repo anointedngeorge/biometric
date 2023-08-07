@@ -36,3 +36,11 @@ class Courses(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title}"
+    
+
+
+class Logo(models.Model):
+    image = models.ImageField(upload_to='logo')
+
+    def __str__(self) -> str:
+        return f"Logo"
