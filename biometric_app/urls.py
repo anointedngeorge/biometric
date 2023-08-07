@@ -8,13 +8,14 @@ from django.urls import path, include, re_path
 
 
 from lecturer_dashboard.admin import lecturer_dashboard_site
+from student_dashboard.admin import student_dashboard_site
 
 
 urlpatterns = [
     # path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('admin/', admin.site.urls, name='admin'),
     path('lecturer/', lecturer_dashboard_site.urls, name='lecturer'),
-    # path('student/', student_dashboard_site.urls),
+    path('student/', student_dashboard_site.urls, name='student'),
     path('', include('frontend.urls')),
     # path('dashboard/', include('dashboard.urls')),
     

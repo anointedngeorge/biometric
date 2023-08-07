@@ -1,0 +1,119 @@
+
+{% extends "argon/base.html" %}
+{% load static %}
+{% static "assets/" as asset %}
+
+{% load table_tags %}
+{% load navigation_tags %}
+
+
+
+
+
+{% block content %}
+  
+
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+ 
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            {% nav_tags host=request.META.HTTP_HOST opts=opts classname="breadcrumb-item" site='lecturer' %}
+          </ol>
+          <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+        </nav>
+     
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-lg-12 mb-4 bg-white">
+            
+    <div>
+        <i>Lecturer's name</i>
+        <h1><b>{{fullname}}</b></h1>
+        <!-- <i>{{id}}</i> -->
+        <i>Attendance Report Sheet</i>
+    </div> <br>
+
+    <div class="col-lg-12">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          <ul>          
+              {% for x in attendance %}
+                    <li>
+                      <a 
+                        id="links{{forloop.counter}}"
+                        class="links"
+                        href="/lecturer/authuser/lecturermodel/viewattendance/{{request.user.id}}/{{x.subject.id}}">
+                        {{x.subject}}
+                      
+                      </a>
+                    </li>
+                  {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-lg-9 table-responsive">
+
+          <table class="table">
+              <thead>
+                  <tr>
+                    <td>Student</td>
+                    <td>Subject</td>  
+                  </tr>
+              </thead>
+
+              <tbody id="pageContainer">
+                  
+              </tbody>
+          </table>
+
+
+        </div>
+
+      </div>
+      
+       
+    </div>
+
+  <div>
+    <button onclick="preview_and_print()">Printout</button>
+  </div>
+
+  <script>
+    const links =  document.querySelectorAll('.links');
+    
+    async function linksFUnction(el) {
+        el.preventDefault();
+        const href =  el.target.href;
+        const query =  await fetch(href);
+        const res =  await query.text()
+        
+        document.querySelector('#pageContainer').innerHTML =  res;
+
+    }
+
+    for (let index = 0; index < links.length; index++) {
+      const element = links[index];
+      document.querySelector(`#${element.id}`).addEventListener('click', linksFUnction, false)
+    }
+
+    function preview_and_print(params) {
+      window.print()
+    }
+  </script>
+
+
+
+
+      </div>
+
+    </div>
+  </main>
+
+{% endblock content %}

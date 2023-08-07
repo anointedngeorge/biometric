@@ -1,6 +1,7 @@
 {% load static %}
 {% static 'css' as css %}
 {% static 'img' as img %}
+{% static 'extra' as logo %}
 {% static 'js' as js %}
 {% static 'lib' as lib %}
 {% static 'mail' as mail %}
@@ -42,7 +43,9 @@
         <div class="row align-items-center py-4 px-xl-5">
             <div class="col-lg-3">
                 <a href="#" class="text-decoration-none">
-                    <h1 class="m-0"><span class="text-primary">Bio</span>Metric</h1>
+                    <img src="{{logo}}/logo.jpg" alt="Logo" width="100" height="100">
+                    <!-- <h1 class="m-0"><span class="text-primary">Bio</span>Metric</h1> -->
+                 
                 </a>
             </div>
             <div class="col-lg-3 text-right">
@@ -92,15 +95,12 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav py-0">
                             <a href="/" class="nav-item nav-link active">Home</a>
-                            <a class="nav-item nav-link" href="/q/registerstudent">
+                            <!-- <a class="nav-item nav-link" href="/q/registerstudent">
                                 Enroll Student
-                            </a>
-
-                            <a class="nav-item nav-link" href="/q/registerlecturer">
-                                Enroll Lecturer
-                            </a>
-                            <a class="nav-item nav-link" href="{% url 'frontend:attendance' %}">Attendance</a>
-                            <a class="nav-item nav-link" href="lecturer">Lecturer Dashboard</a>
+                            </a> -->
+                            <a class="nav-item nav-link" href="student">Student Portal</a>
+                            <!-- <a class="nav-item nav-link" href="{% url 'frontend:attendance' %}">Attendance</a> -->
+                            <a class="nav-item nav-link" href="lecturer">Lecturer Portal</a>
                         </div>
                         
                     </div>
@@ -174,7 +174,7 @@
     <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
         <div class="row">
             <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white">&copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+                <p class="m-0 text-white">&copy; All Rights Reserved.
                 </p>
             </div>
             <div class="col-lg-6 text-center text-md-right">

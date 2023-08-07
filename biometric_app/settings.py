@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'authuser',
     'storages',
     'lecturer_dashboard',
+    'student_dashboard',
     'django_celery_beat',
     'periodictask',
     'channels'
@@ -142,7 +143,7 @@ if config('ENVIRONMENT') == 'production':
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = f"./static/"
+STATIC_URL = f"static/"
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "media/"
 
