@@ -61,6 +61,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=timezone.now())
     last_login = models.DateTimeField(blank=True, null=True)
 
+    account_type = models.CharField(max_length=250, 
+                                    choices=[('student', 'Student'), ('lecturer','Lecturer')], 
+                                    null=True, blank=True)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
