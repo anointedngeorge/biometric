@@ -4,8 +4,8 @@ from student_dashboard.admin.base_admin import (
     CURRENT_TEMPLATE
 )
 
-# from student_dashboard.admin.lecturer import *
-# from student_dashboard.admin.attendance import *
-# from student_dashboard.admin.courses import *
-# from student_dashboard.admin.department import *
-# from student_dashboard.admin.levels import *
+from student_dashboard.admin.lecturer import *
+from student_dashboard.admin.attendance import *
+from student_dashboard.admin.courses import *
+from student_dashboard.admin.department import *
+from student_dashboard.admin.levels import *

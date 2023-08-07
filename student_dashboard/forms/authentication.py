@@ -1,8 +1,7 @@
 from django import forms
-
+from django.conf import ENVIRONMENT_VARIABLE
 from django.contrib.auth.forms import AuthenticationForm
-
-
+from django.core.exceptions import PermissionDenied
 from authuser.models import *
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -13,7 +12,16 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['password'].widget.attrs.update({'class': 'form-control'})
 
     def confirm_login_allowed(self, user):
-        pass
+        if user.is_superuser:
+            raise PermissionDenied("Superusers are not expected to access this page. ")
+        if user.is_anonymous:
+            raise PermissionDenied("You're not permitted to access this page.")
+        if not user.account_type == 'student':
+            raise PermissionDenied("You must be student!")
+        
+        roles = user.account_type
+        permission_group = Group.objects.get(name=roles)
+        user.groups.add(permission_group)
 
 
 class AuthenticationRegisterForm(forms.ModelForm):
