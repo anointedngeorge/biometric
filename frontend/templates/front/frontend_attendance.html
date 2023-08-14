@@ -547,13 +547,13 @@ button.inactive
               {{message}}
           </div>
         {% endfor %}
-        <a href="{% url 'frontend:home' %}">Back to Homepage</a>
+        <a href="/student">Back to dashboard</a>
         <h1 class="text text-white0">BIOMETRIC FACE RECOGNITION</h1>
       <div>
           <img src="https://i.imgur.com/dkWaSol.png" width="70">
       </div>
       
-      <form id="uploadForm" action="{% url 'frontend:attendance' %}" method="POST" enctype="multipart/form-data">
+      <form id="uploadForm" action="student/dashboard/attendance/attendance/" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="px-sm-4 mt-3 px-3">
           

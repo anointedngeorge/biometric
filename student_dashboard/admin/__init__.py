@@ -9,3 +9,4 @@ from student_dashboard.admin.attendance import *
 from student_dashboard.admin.courses import *
 from student_dashboard.admin.department import *
 from student_dashboard.admin.levels import *
+from student_dashboard.admin.student_courses import *

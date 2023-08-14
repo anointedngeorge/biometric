@@ -39,7 +39,11 @@
           {% for model in app_list.models  %}
     
             <li class="nav-item">
-              <a class="nav-link" href="{{ model.admin_url }}" >
+              <a class="nav-link" href="{% if model.admin_url %}
+              {{ model.admin_url }}
+              {% else %}
+               
+              {% endif %}" >
                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                   <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                 </div>
@@ -59,12 +63,12 @@
             <h6 class="mb-0">
                 {{request.user.get_user}}
             </h6>
-            {% if request.user.phone %}
+            {% if request.phone %}
             <p class="text-xs font-weight-bold mb-0">{{request.user.phone}}</p>
             {% endif %}
             <p class="text-xs font-weight-bold mb-0">{{request.user.email}}</p>
             <br>
-            <a href="{% url 'lecturer:logout' %}" class="btn btn-dark mb-0 me-2">
+            <a href="{% url 'student:logout' %}" class="btn btn-dark mb-0 me-2">
               <i class="fa fa-sign-out me-1" aria-hidden="true"></i> Logout
             </a>
 

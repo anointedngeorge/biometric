@@ -13,7 +13,17 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['password'].widget.attrs.update({'class': 'form-control'})
 
     def confirm_login_allowed(self, user):
-        pass
+        from django.core.exceptions import PermissionDenied
+        if user.is_superuser:
+            raise PermissionDenied("Superusers are not expected to access this page. ")
+        if user.is_anonymous:
+            raise PermissionDenied("You're not permitted to access this page.")
+        if not user.account_type == 'lecturer':
+            raise PermissionDenied("You must be lecturer!")
+        
+        roles = user.account_type
+        permission_group = Group.objects.get(name=roles)
+        user.groups.add(permission_group)
 
 
 class AuthenticationRegisterForm(forms.ModelForm):

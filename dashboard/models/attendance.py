@@ -17,7 +17,8 @@ class Attendance(CoreDb):
     attendance = models.ForeignKey("dashboard.CreateAttendance", on_delete=models.CASCADE, null=True, 
                                    related_name='create_attendance_rel')
     code = models.CharField(max_length=50, null=True)
-    lecturer = models.ForeignKey("authuser.LecturerModel", on_delete=models.CASCADE, null=True, related_name='attendance_lecturer_related')
+    lecturer = models.ForeignKey("authuser.LecturerModel", on_delete=models.CASCADE, null=True, 
+                                 related_name='attendance_lecturer_related')
     subject = models.ForeignKey("dashboard.subjects", on_delete=models.CASCADE, null=True, related_name='attendance_subject_related')
     department = models.ForeignKey("dashboard.DepartmentListing", on_delete=models.CASCADE, null=True, related_name='attendance_department_related')
     levels = models.ForeignKey("dashboard.Levels", on_delete=models.CASCADE, null=True, related_name='attendance_level_rel')
@@ -54,7 +55,8 @@ class CreateAttendance(CoreDb):
                                                                           ('finished','finished'),
                                                                           ('retake','retake'),  ])
     total_number_students = models.IntegerField(default=0)
-    time_elapsed = models.IntegerField(default=0)
+    time_elapsed = models.IntegerField(default=5)
+    time_elapsed2 = models.IntegerField(default=5)
 
     class Meta:
         verbose_name = 'Create Attendance'

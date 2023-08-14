@@ -45,6 +45,13 @@ class CustomUserManager(UserManager):
         
 
 class User(AbstractBaseUser, PermissionsMixin):
+
+    class AccountType(models.TextChoices):
+        none =  "","-----"
+        student =  "student","Student"
+        lecturer = "lecturer","Lecturer"
+    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     code = models.CharField(max_length=300, blank=True, null=True)
     email = models.EmailField(('email address'), unique=True, error_messages="Email Already Taken")
@@ -62,8 +69,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(blank=True, null=True)
 
     account_type = models.CharField(max_length=250, 
-                                    choices=[('student', 'Student'), ('lecturer','Lecturer')], 
-                                    null=True, blank=True)
+                                    choices=AccountType.choices, 
+                                    default=AccountType.none)
+    # account_type2 = models.CharField(max_length=250, 
+    #                                 choices=AccountType.choices, 
+    #                                 default=AccountType.none)
 
     objects = CustomUserManager()
 
@@ -74,6 +84,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = "Users"
+
+    def get_user(self):
+        user =None
+        if self.account_type == 'student':
+            student = self.studentmodel
+            user =  f"{student.surname} {student.first_name} {student.last_name}"
+        elif self.account_type == 'lecturer':
+            student = self.lecturermodel
+            user =  f"{student.surname} {student.first_name} {student.last_name}"
+        return user
+    
+    def get_student_attendance_count(self):
+        student = self.studentmodel.attendance_taken_student.filter(student_id=self.id).count()
+        return student
+    
+
+    def get_lecturer_attendance_count(self):
+        try:
+            student = self.Lecturermodel.attendance_lecturer_related.filter(lecturer_id=self.id).count()
+            return student
+        except:
+            return 0
 
     def __str__(self) -> str:
         if self.username:

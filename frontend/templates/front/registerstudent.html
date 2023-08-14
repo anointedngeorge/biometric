@@ -32,8 +32,8 @@
 
 
     <!-- Contact Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
+    <div class="container-fluid py-5 ">
+        <div class="container py-5 border shadow">
             <div class="text-center mb-5">
                 <!-- <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Contact</h5> -->
                 <h1>Register Student</h1>
@@ -47,7 +47,8 @@
                         >
                         {% csrf_token %}
                         {{ studentform|render_form3 }}
-                        <button class="btn btn-primary " type="submit">
+                        <br>
+                        <button class="btn btn-primary btn-block " type="submit">
                             Enroll A Student
                         </button>
                    </form>

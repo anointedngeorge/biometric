@@ -41,9 +41,9 @@ class LecturerModel(User):
     
     def get_attendance(self):
         fullname = f"{self.first_name} {self.last_name}"
-        param = 'lecturer'
+        param = 'admin'
         return format_html('<a href="{}">View Attendance</a>',
-                reverse_lazy(f"{param}:lecturerstudentattendance", 
+                reverse_lazy(f"{param}:lecturer-student-attendance", 
                     args=[self.pk, fullname])
             )
    
@@ -58,6 +58,7 @@ class LecturerModel(User):
         if not len(self.password) > 20:
             super().set_password(self.password)  # Set the password using super()
         self.is_active = True
+        self.account_type = 'lecturer'
         self.is_staff = True
         # self.role_name = self.Roles.STUDENT  # Assign the student role
         return super().save(*args, **kwargs)  # Call the parent's save method using super()

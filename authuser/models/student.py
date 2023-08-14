@@ -17,21 +17,29 @@ def generate_filename(instance, filename):
     return os.path.join('photo', filename)
 
 
-STUDENT_LIST_DISPLAY = ['first_name','last_name','reg_no','picture_name','get_attendance']
+STUDENT_LIST_DISPLAY = ['surname','first_name','last_name','gender','phone','dob','reg_no',
+                        'picture_name','username','get_attendance']
 class StudentModel(User):
-    # user = models.ForeignKey("authuser.User", on_delete=models.CASCADE, null=True, blank=True, related_name='student_relation')
+    surname =  models.CharField(max_length=150, null=True, blank=True)
+    gender =  models.CharField(max_length=150, null=True, blank=True, 
+                               choices=[("M","Male"),("F","Female")])
+    dob = models.CharField(max_length=150, null=True, blank=True)
+    state_of_origin = models.CharField(max_length=150, null=True, blank=True)
     first_name = models.CharField(max_length=350, null=True)
     last_name = models.CharField(max_length=350, null=True)
     reg_no = models.CharField(max_length=300, blank=True, null=True)
+    phone = models.CharField(max_length=300, blank=True, null=True)
+    address = models.CharField(max_length=300, blank=True, null=True)
     picture_url = models.ImageField(upload_to=generate_filename, null=True, blank=True)
     picture_name = models.CharField(max_length=550, null=True, blank=True, editable=False)
+
 
     class Meta:
         verbose_name = 'Students'
         verbose_name_plural = 'Students'
 
     def __str__(self) -> str:
-        return f"Students"
+        return f"{self.first_name} {self.last_name}"
     
     def get_attendance(self):
         fullname = f"{self.first_name} {self.last_name}"
@@ -40,7 +48,6 @@ class StudentModel(User):
                     args=[self.pk, fullname])
             )
 
-    
     def get_student_courses(self):
         container = []
         obj =  self.student_courses.all().filter(user=self.pk)
@@ -61,6 +68,7 @@ class StudentModel(User):
             super().set_password(self.password)  # Set the password using super()
         
         self.is_active = True
+        self.account_type = "student"
         self.is_staff = True
         # self.role_name = self.Roles.STUDENT  # Assign the student role
         return super().save(*args, **kwargs)  # Call the parent's save method using super()

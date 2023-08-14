@@ -23,6 +23,7 @@ from django import template
 # from django.utils.translation import ugettext as _
 import uuid
 from authuser.models import *
+from authuser.forms import *
 
 
 @admin.register(LecturerModel)
@@ -30,13 +31,13 @@ class LecturerAdmin(admin.ModelAdmin):
     list_display = LECTURER_ADMIN_DISPLAY
     list_display_links = ['salutation','first_name']
     list_filter = ['first_name','last_name']
-
+    form = AdminLecturerForm
 
     def get_urls(self) -> List[URLPattern]:
         # student-attendance
         urls = super().get_urls()
         add_urls = [
-            path('lecturer-student-attendance/<str:id>/<str:fullname>', self.lecturer_student_attendance, name='lecturer-student-attendance')
+            path('lecturer-student-attendance/<str:id>/<str:fullname>/', self.lecturer_student_attendance, name='lecturer-student-attendance')
         ]
         return add_urls + urls
     

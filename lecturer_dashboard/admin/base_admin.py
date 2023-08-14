@@ -4,12 +4,17 @@ from django.contrib import messages as mesage
 from django.contrib import admin
 from django.urls.resolvers import URLResolver
 from django.urls import path, include, re_path
-
+from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
 from lecturer_dashboard.forms.authentication import (
     CustomAuthenticationForm,
     AuthenticationRegisterForm
+)
+
+
+from authuser.forms.lecturer_form import (
+    LecturerForm,UpdateLecturerForm
 )
 from authuser.models import *
 
@@ -53,8 +58,35 @@ class LecturerDashboard(admin.AdminSite):
         ]
         return add_urls + urls
     
+    def get_urls(self) -> List[URLResolver]:
+        urls = super().get_urls()
+        add_urls = [
+            path('profile/', self.profile, name='profile'),
+            path('test-fun1', self.profile, name='test-fun1'),
+        ]
+        return add_urls + urls
+
+
     def profile(self, request):
-        return HttpResponse('Loading')
+        context = self.each_context(request)
+        student_instance = LecturerModel.objects.all().filter(id=request.user.id)
+        
+        if student_instance.exists():
+            # Create the form instance using the fetched student instance
+            student_dashboard_form = UpdateLecturerForm(request.POST or None, instance=student_instance.get())
+            context['student_dashboard_form'] = student_dashboard_form
+        
+            if request.method == 'POST':
+                form = UpdateLecturerForm(request.POST, request.FILES)
+                if form.is_valid():
+                    form.save()
+                    
+            return TemplateResponse(request, 'argon/profile.html', context=context)
+        
+        else:
+            return redirect(f"{DASHBOARD_NAME}")
+        
+       
     
 
 lecturer_dashboard_site = LecturerDashboard(name=f'{DASHBOARD_NAME}')

@@ -1,5 +1,4 @@
 from typing import Any, Dict, List, Optional
-from django.shortcuts import redirect, render
 from django.contrib.admin.options import InlineModelAdmin
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -14,10 +13,9 @@ from django.urls.resolvers import URLResolver
 from django.urls import path, include, re_path
 from django.template.response import TemplateResponse
 import os
-from django.contrib import messages as mesage
 
 
-from student_dashboard.forms.authentication import *
+from lecturer_dashboard.forms.authentication import *
 
 
 from dashboard.models import *
@@ -28,20 +26,22 @@ from student_dashboard.admin import (
     CURRENT_TEMPLATE,
     
 )
+
 # student/logout/
 # student/password_change/
 # <form method="post" id="login-form" action="{% url 'admin:login' %}">
 # <form method="post" id="login-form" action="{% url 'admin:login' %}?next={{ request.GET.next }}">
 
 
-MODEL =  Attendance
+MODEL =  RegisterStudentSubject
 
 
 # Register your models here using the student_site
-class AttendanceCustomAdminsite(admin.ModelAdmin):
-    list_display = ['student','attendance','lecturer','subject','department','levels','status']
+class RegisterStudentSubjectAdminsite(admin.ModelAdmin):
+    list_display = ['user','code','subject', 'unit','department', 'levels', 'semester']
     # list_display_links = ['*']
     list_form = '__all__'
+
 
     m = MODEL._meta
 
@@ -56,98 +56,18 @@ class AttendanceCustomAdminsite(admin.ModelAdmin):
 
 
     def get_urls(self) -> List[URLResolver]:
-        
         urls = super().get_urls()
         add_urls = [
             path('test-fun1/<int:user_id>', self.profile, name='test-fun1'),
-            path('attendance/', self.Attendenceindex, name='attendance'),
         ]
         return add_urls + urls
-
-
-
-    def Attendenceindex(self, request):
-        from dashboard.models.attendance import Attendance, CreateAttendance
-        from plugins.pilImage import pil_image_file, load_image_dir
-        import os
-        from plugins.face_recognition_script import (
-            VideoCaptureFrame,
-            load_photo_file,
-            VIDEO_TITLE,
-            load_photo_file_storage,
-            video1
-        )
-        image_url = f"{settings.MEDIA_ROOT}/photo"
-        CURRENT_DATE =  timezone.now()
-        TEMPLATE = 'front'
-
-        try:
-            
-            if request.method == 'POST':
-                # video1()
-                data = {}
-                attendance_code = request.POST.get('attendance_code')
-                attendance_code_ = ''.join(attendance_code.split())
-                
-                attendance = CreateAttendance.objects.all().filter(code=attendance_code_, status='started')
-
-                if attendance.exists():
-                    attend =  attendance.get()
-                    title =  f"{attend.lecturer} - {attend.subject} - {attend.department} - {attend.levels}"
-        
-                    known_face_encodings , known_face_names = load_photo_file(photo_path_directory=image_url)
-                
-                    frame_capture = VideoCaptureFrame(known_face_encodings, known_face_names, title, delay=10)
-                
-                    # check if frame capture don't return None as a value.
-                    if frame_capture != None:
-                        is_true = frame_capture[0]
-                        student_id =  frame_capture[1]
-                        # update the data dictionary
-                        data['student_id'] = uuid.UUID(student_id)
-                        data['attendance_id'] = attend.id
-                        data['code'] = attend.code
-                        data['lecturer_id'] = attend.lecturer.id
-                        data['subject_id'] = attend.subject.id
-                        data['department_id'] = attend.department.id
-                        data['levels_id'] = attend.levels.id
-                        # print(data)
-                        all_attend = Attendance.objects.all()
-                        # if not all_attend.filter(attendance_date=CURRENT_DATE, subject=attend.subject.id).exists():
-                        if not all_attend.filter(
-                            code=attendance_code,
-                            attendance_date=CURRENT_DATE, subject=attend.subject.id).exists():
-                            all_attend.create(**data)
-                            mesage.success(request, 'Present')
-                        else:
-                            mesage.warning(request, 'Fraud!!! Duplicate attendance dedictated')
-                            
-                else:
-                    mesage.error(request, 'This attendance has ended')
-                    
-            return render(request, f"{TEMPLATE}/frontend_attendance.html" )
-        except Exception as e:
-            print("Loading eee")
-            return HttpResponse(f"{e}")
-        
-
-
-
-
-
-
-
-
-
 
     def profile(self, request, user_id=None):
     
         return HttpResponse(str(user_id))
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        qs = super().get_queryset(request)
-        return qs.filter(student_id=request.user.id)
-   
+    
+
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         from django.forms import modelform_factory
         # to import model form
@@ -165,10 +85,12 @@ class AttendanceCustomAdminsite(admin.ModelAdmin):
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
+    
 
 
 
     def changelist_view(self, request, extra_context=None):
+   
         model = self.model
         ModelFormSet = formset_factory(self.get_changelist_formset(request), extra=0)
         formset = ModelFormSet()
@@ -191,8 +113,10 @@ class AttendanceCustomAdminsite(admin.ModelAdmin):
         extra_context['formset'] = formset
         extra_context['opts'] = opts
         extra_context['page_title'] = opts.verbose_name
+
+        
         
         return super().changelist_view(request, extra_context=extra_context)
 
 
-student_dashboard_site.register(MODEL, AttendanceCustomAdminsite)
+student_dashboard_site.register(MODEL, RegisterStudentSubjectAdminsite)

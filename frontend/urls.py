@@ -11,7 +11,7 @@ urlpatterns = [
     path('', homepage , name='home'),
     path('q/<str:pagename>', homepage, name='home'),
 
-    path('attendance/', Attendenceindex, name='attendance'),
+    # path('attendance/', Attendenceindex, name='attendance'),
     path('lecturer_register/', lecturerRegistration, name='lecturer_register'),
     path('student_register/', studentRegistration, name='student_register'),
     path('test', test, name='test'),
