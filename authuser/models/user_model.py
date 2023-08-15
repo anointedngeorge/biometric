@@ -85,6 +85,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'User'
         verbose_name_plural = "Users"
 
+    def get_user_logo(self):
+        logo = self.studentmodel.picture_url.url
+        return logo
+
     def get_user(self):
         user =None
         if self.account_type == 'student':

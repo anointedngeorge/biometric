@@ -132,14 +132,6 @@ class AttendanceCustomAdminsite(admin.ModelAdmin):
         
 
 
-
-
-
-
-
-
-
-
     def profile(self, request, user_id=None):
     
         return HttpResponse(str(user_id))

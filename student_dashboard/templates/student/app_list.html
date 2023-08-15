@@ -60,6 +60,8 @@
         <img class="w-50 mx-auto" src="{{asset}}/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
         <div class="card-body text-center p-3 w-100 pt-0">
           <div class="docs-info">
+            <img src="{{request.user.get_user_logo}}" style="width: 100px; height: 100px; border:2px solid white; 
+            border-radius: 100px;">
             <h6 class="mb-0">
                 {{request.user.get_user}}
             </h6>

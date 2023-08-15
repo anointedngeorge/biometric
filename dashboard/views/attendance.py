@@ -39,7 +39,7 @@ class AttendanceView(TemplateView):
         context['forms'] = self.forms()
 
         return context
-    
+    anointedngeorge@gmail.com
     def get(self, request, *args: Any, **kwargs: Any) -> HttpResponse:
         print('form loading...')
         return super().get(request, *args, **kwargs)

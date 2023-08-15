@@ -17,7 +17,7 @@ SALUTATION = [
     ('madam','Madam')
 ]
 
-LECTURER_ADMIN_DISPLAY = ['salutation','first_name','last_name','get_attendance']
+LECTURER_ADMIN_DISPLAY = ['salutation','first_name','last_name','attendance_count','get_attendance']
 
 class LecturerModel(User):
     # user = models.ForeignKey("authuser.User", 
@@ -53,6 +53,13 @@ class LecturerModel(User):
         obj =  self.lecturer_courses.all().filter(lecturer=self.pk)     
         return obj
     
+
+    def attendance_count(self):
+        container = []
+        obj =  self.attendance_lecturer_related.all().filter(lecturer=self.pk).count()
+        return obj
+    
+
     def save(self, *args, **kwargs):
         # this will prevent overriding of the password
         if not len(self.password) > 20:
