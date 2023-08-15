@@ -53,7 +53,7 @@ class CreateAttendance(CoreDb):
     levels = models.ForeignKey("dashboard.Levels", on_delete=models.CASCADE, null=True, related_name='level_rel')
     status = models.CharField(max_length=250, default='pending', choices=[('started','started'), 
                                                                           ('finished','finished'),
-                                                                          ('retake','retake'),  ])
+                                                                          ('retake','retake')])
     total_number_students = models.IntegerField(default=0)
     time_elapsed = models.IntegerField(default=5)
     time_elapsed2 = models.IntegerField(default=5)
@@ -99,4 +99,3 @@ class CreateAttendance(CoreDb):
 
 class TestTaskOnHeroku(models.Model):
     data = models.CharField(max_length=500)
-    
