@@ -94,3 +94,9 @@ class CreateAttendance(CoreDb):
             # The duration is less than the threshold duration
             # Do something else...
                 return 0
+        
+
+
+class TestTaskOnHeroku(models.Model):
+    data = models.CharField(max_length=500)
+    

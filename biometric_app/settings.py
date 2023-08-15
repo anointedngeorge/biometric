@@ -9,6 +9,7 @@ from biometric_app.jazzmin_settings import *
 from storages.backends.s3boto3 import S3Boto3Storage
 from celery.schedules import crontab
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'student_dashboard',
     'django_celery_beat',
     'periodictask',
-    'channels'
+    'channels',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -172,3 +174,9 @@ CELERY_BEAT_SCHEDULE = {
         },
     
 }
+
+# execute scheduled task
+CRONJOBS = [
+    ('*/5 * * * *', 'dashboard.tasks.MyCronJob'),
+    # Add more cron jobs here
+]

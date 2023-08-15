@@ -9,6 +9,10 @@ import uuid
 from django.db.models import Q
 
 
+
+admin.site.register(TestTaskOnHeroku)
+
+
 @admin.register(Attendance)
 class Attendance_Admin(admin.ModelAdmin):
     list_display = ATTENDANCE_LIST_DISPLAY
